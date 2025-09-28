@@ -78,17 +78,15 @@ sudo git clone -b master --depth 1 https://github.com/keyitdev/sddm-astronaut-th
 ```
 3. Copy fonts to `/usr/share/fonts/`
 ```sh
-sudo cp -r /usr/share/sddm/themes/sddm-astronaut-theme/Fonts/* /usr/share/fonts/
+sudo cp -r $REPO_DIR/Fonts/* /usr/share/fonts/
 ```
-4. Edit `/etc/sddm.conf`
+4. Link `/etc/sddm.conf`
 ```sh
-echo "[Theme]
-Current=sddm-astronaut-theme" | sudo tee /etc/sddm.conf
+sudo ln $REPO_DIR/sddm.conf /etc/sddm.conf 
 ```
-5. Edit `/etc/sddm.conf.d/virtualkbd.conf`
+5. Link `/etc/sddm.conf.d/virtualkbd.conf`
 ```sh
-echo "[General]
-InputMethod=qtvirtualkeyboard" | sudo tee /etc/sddm.conf.d/virtualkbd.conf
+sudo ln $REPO_DIR/virtualkbd.conf /etc/sddm.conf.d/virtualkbd.conf 
 ```
 
 ## Selecting a theme

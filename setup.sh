@@ -11,7 +11,7 @@ set -euo pipefail
 readonly THEME_REPO="https://github.com/Keyitdev/sddm-astronaut-theme.git"
 readonly THEME_NAME="sddm-astronaut-theme"
 readonly THEMES_DIR="/usr/share/sddm/themes"
-readonly PATH_TO_GIT_CLONE="$HOME/$THEME_NAME"
+readonly PATH_TO_GIT_CLONE="$HOME/documents/sddm-theme"
 readonly METADATA="$THEMES_DIR/$THEME_NAME/metadata.desktop"
 readonly DATE=$(date +%s)
 
@@ -126,7 +126,7 @@ clone_repo() {
 
 # Install theme
 install_theme() {
-    local src="$HOME/$THEME_NAME"
+    local src=$PATH_TO_GIT_CLONE
     local dst="$THEMES_DIR/$THEME_NAME"
 
     [[ ! -d "$src" ]] && { error "Clone repository first"; return 1;}
