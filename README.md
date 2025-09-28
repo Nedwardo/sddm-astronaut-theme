@@ -80,11 +80,15 @@ sudo git clone -b master --depth 1 https://github.com/keyitdev/sddm-astronaut-th
 ```sh
 sudo cp -r $REPO_DIR/Fonts/* /usr/share/fonts/
 ```
-4. Link `/etc/sddm.conf`
+4. Add the folder to `/usr/share/sddm/themes`
+```sh
+sudo ln -s $REPO_DIR /usr/share/sddm/themes/sddm-astronaut-theme
+```
+5. Link `/etc/sddm.conf`
 ```sh
 sudo ln $REPO_DIR/sddm.conf /etc/sddm.conf 
 ```
-5. Link `/etc/sddm.conf.d/virtualkbd.conf`
+6. Link `/etc/sddm.conf.d/virtualkbd.conf`
 ```sh
 sudo ln $REPO_DIR/virtualkbd.conf /etc/sddm.conf.d/virtualkbd.conf 
 ```
