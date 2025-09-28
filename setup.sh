@@ -11,7 +11,7 @@ set -euo pipefail
 readonly THEME_REPO="https://github.com/Keyitdev/sddm-astronaut-theme.git"
 readonly THEME_NAME="sddm-astronaut-theme"
 readonly THEMES_DIR="/usr/share/sddm/themes"
-readonly PATH_TO_GIT_CLONE="$HOME/documents/sddm-theme"
+readonly PATH_TO_GIT_CLONE="$HOME/documents/sddm-astronaut-theme"
 readonly METADATA="$THEMES_DIR/$THEME_NAME/metadata.desktop"
 readonly DATE=$(date +%s)
 
@@ -117,19 +117,12 @@ install_deps() {
     info "Dependencies installed"
 }
 
-# Clone repository
-clone_repo() {
-    [[ -d "$PATH_TO_GIT_CLONE" ]] && mv "$PATH_TO_GIT_CLONE" "${PATH_TO_GIT_CLONE}_$DATE"
-    spin "Cloning repository..." git clone -b master --depth 1 "$THEME_REPO" "$PATH_TO_GIT_CLONE"
-    info "Repository cloned to $PATH_TO_GIT_CLONE"
-}
-
 # Install theme
 install_theme() {
     local src=$PATH_TO_GIT_CLONE
     local dst="$THEMES_DIR/$THEME_NAME"
 
-    [[ ! -d "$src" ]] && { error "Clone repository first"; return 1;}
+    [[ ! -d "$src" ]] && { error "Stow dir first"; return 1;}
 
     # Backup and copy
     [[ -d "$dst" ]] && sudo mv "$dst" "${dst}_$DATE"
@@ -140,13 +133,10 @@ install_theme() {
     [[ -d "$dst/Fonts" ]] && spin "Installing fonts..." sudo cp -r "$dst/Fonts"/* /usr/share/fonts/
 
     # Configure SDDM
-    echo "[Theme]
-    Current=$THEME_NAME" | sudo tee /etc/sddm.conf >/dev/null
+    sudo ln $src/sddm.conf /etc/sddm.conf &> /dev/null
 
     sudo mkdir -p /etc/sddm.conf.d
-    echo "[General]
-    InputMethod=qtvirtualkeyboard" | sudo tee /etc/sddm.conf.d/virtualkbd.conf >/dev/null
-
+    sudo ln $src/virtualkbd.conf /etc/sddm.conf.d/virtualkbd.conf &> /dev/null
     info "Theme installed"
 }
 
@@ -210,7 +200,6 @@ main() {
         local choice=$(choose \
             "🚀 Complete Installation (recommended)" \
             "📦 Install Dependencies" \
-            "📥 Clone Repository" \
             "📂 Install Theme" \
             "🔧 Enable SDDM Service" \
             "🎨 Select Theme Variant" \
@@ -218,9 +207,8 @@ main() {
             "❌ Exit")
 
         case "$choice" in
-            "🚀 Complete Installation (recommended)") install_deps && clone_repo && install_theme && select_theme && enable_sddm && info "Everything done!" && exit 0;;
+            "🚀 Complete Installation (recommended)") install_deps && install_theme && select_theme && enable_sddm && info "Everything done!" && exit 0;;
             "📦 Install Dependencies") install_deps ;;
-            "📥 Clone Repository") clone_repo ;;
             "📂 Install Theme") install_theme ;;
             "🔧 Enable SDDM Service") enable_sddm ;;
             "🎨 Select Theme Variant") select_theme ;;

@@ -72,23 +72,19 @@ sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimed
 sddm libqt6svg6 qt6-virtualkeyboard-plugin libqt6multimedia6 qml6-module-qtquick-controls qml6-module-qtquick-effects libxcb-cursor0 # Debian Unstable
 ```
 
-2. Clone this repository
-```sh
-sudo git clone -b master --depth 1 https://github.com/keyitdev/sddm-astronaut-theme.git /usr/share/sddm/themes/sddm-astronaut-theme
-```
-3. Copy fonts to `/usr/share/fonts/`
+2. Copy fonts to `/usr/share/fonts/`
 ```sh
 sudo cp -r $REPO_DIR/Fonts/* /usr/share/fonts/
 ```
-4. Add the folder to `/usr/share/sddm/themes`
+3. Add the folder to `/usr/share/sddm/themes`
 ```sh
-sudo ln -s $REPO_DIR /usr/share/sddm/themes/sddm-astronaut-theme
+sudo cp -r $REPO_DIR /usr/share/sddm/themes/sddm-astronaut-theme
 ```
-5. Link `/etc/sddm.conf`
+4. Link `/etc/sddm.conf`
 ```sh
 sudo ln $REPO_DIR/sddm.conf /etc/sddm.conf 
 ```
-6. Link `/etc/sddm.conf.d/virtualkbd.conf`
+5. Link `/etc/sddm.conf.d/virtualkbd.conf`
 ```sh
 sudo ln $REPO_DIR/virtualkbd.conf /etc/sddm.conf.d/virtualkbd.conf 
 ```
